@@ -1,43 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Countdown() {
   const initialState = 30;
-  const [duration, setDuration] = useState(initialState);
 
-  const handlePlus = (e) => {
-    console.log("!!!!");
-    setDuration(duration + 1);
+  const [count, setCount] = useState(initialState);
+  const [timerId, setTimerID] = useState();
+  const [counterRunning, setCounterRunning] = useState(false);
+
+  useEffect(() => {
+    if (counterRunning) {
+      const timer = count > 0 && setInterval(() => setCount(count - 1), 1000);
+      setTimerID(timer);
+      return () => clearInterval(timer);
+    }
+  }, [count, counterRunning]);
+
+  const handlePlus = () => {
+    setCount(count + 1);
   };
 
-  const handleMin = (e) => {
-    setDuration(duration - 1);
+  const handleMin = () => {
+    setCount(count - 1);
   };
 
-  const pauseTimer = (e) => {
-    //
+  const pauseTimer = () => {
+    setCounterRunning(false);
+    clearInterval(timerId);
   };
 
-  const resetTimer = (e) => {
-    //
+  const resetTimer = () => {
+    setCounterRunning(false);
+    clearInterval(timerId);
+    setCount(initialState);
   };
-  const startTimer = (e) => {
-    //
+
+  const startTimer = () => {
+    setCounterRunning(true);
   };
 
   return (
     <div>
-      <h1>{duration}</h1>
-      <button onClick={handlePlus}>+</button>
-      <button onClick={handleMin}>-</button>
-      <br />
-      <button onClick={pauseTimer}>Pause</button>
-      <br />
-      <button onClick={resetTimer}>Reset</button>
-      <br />
-      <button onClick={startTimer}>Start</button>
+      <div
+        style={{
+          margin: "auto",
+          width: 100,
+          height: 100,
+          borderRadius: "50%",
+          border: "5px solid black",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>{count}</h1>
+      </div>
+      <div style={{ margin: 10 }}>
+        <button onClick={handlePlus}>+</button>
+        <button onClick={handleMin}>-</button>
+        <br />
+        <button onClick={resetTimer}>Reset</button>
+        <br />
+        {!counterRunning ? (
+          <button onClick={startTimer}>Start</button>
+        ) : (
+          <button onClick={pauseTimer} disabled={count === 0}>
+            Pause
+          </button>
+        )}
+      </div>
     </div>
   );
 }
+
+// <button disabled={buttonIsDisabled}>
 
 // Implement a countdown timer
 //
