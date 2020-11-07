@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import Countdown from "./components/Countdown";
 
-function App() {
+// Implement a countdown timer
+//
+// (Clock that counts down 10 9 8 7 ...)
+// Clock stops at 0 and says "Finished"
+//
+// Button "Start" -> start countdown
+// Button "Pause" -> pause countdown
+// Button "Reset" -> reset the counter to the original setting
+// Button "+1" -> add 1 second to the timer
+// Button "-1" -> subtract 1 second from the timer
+//
+// Counter can't go below 0
+// "Reset" stops the timer and also sets the counter back to the original number
+// If you press "Start" while's it's already running, it shouldn't do anything bad, like count down twice as fast.
+
+// Start the timer
+// const timerId = setInterval(callbackFunction, timeoutInMilliseconds)
+//
+// Stop the timer
+// clearInterval(timerId)
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Countdown />
     </div>
   );
-}
+};
 
 export default App;
